@@ -1,6 +1,8 @@
 ## 🧠 AI Memory Recall System
 I built this AI-powered memory recall system to act as a smart personal assistant that stores and retrieves memories based on natural language queries. It functions like a digital second brain, helping users recall stored thoughts, reminders, and important notes with the power of AI and NLP.
 
+https://ai-memory-recall.streamlit.app
+
 ## The Core Idea: A Thought-Based Memory Retrieval System
 The system is designed to mimic how human memory works—when we try to recall something, we don’t just retrieve an exact phrase, but we contextually find the most relevant memory based on time, intent, and past thoughts.
 
