@@ -8,13 +8,13 @@ import shutil
 from transformers import pipeline
 
 load_dotenv()
-MONGO_URI = os.getenv("MONGO_URI")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+MONGO_URI = os.getenv("MONGO")
+GEMINI_API_KEY = os.getenv("GEMINI")
 genai.configure(api_key=GEMINI_API_KEY)
 
 app = FastAPI()
 
-client = MongoClient(MONGO_URI)
+client = MongoClient(MONGO)
 db = client["memoryRecallDB"]
 notes_collection = db["notes"]
 
