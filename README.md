@@ -1,5 +1,4 @@
 
-```md
 # 🧠 AI Memory Recall System  
 Seamlessly store and recall thoughts using AI-powered memory retrieval with NLP.
 
@@ -207,7 +206,7 @@ Example: Use **similarity search**, **semantic retrieval**, or **RAG-based embed
 ---
 
 🔥 **Now go ahead, copy-paste this into your `README.md` file and deploy your AI Memory Recall System!** 🚀
-```
+
 
 This **README.md** is **structured, fully formatted,** and **directly copy-pasteable** into your repository. It **covers everything** from **MongoDB setup, AWS EC2, Docker, API testing, troubleshooting, and customization.**  
 
