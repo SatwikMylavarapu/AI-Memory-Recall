@@ -5,7 +5,8 @@ from pydub import AudioSegment
 from gtts import gTTS
 from dotenv import load_dotenv
 
-
+# ✅ Load Environment Variables
+load_dotenv()
 # ✅ Backend API URL
 API_URL = os.getenv("API_URL")
 
