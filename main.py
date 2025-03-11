@@ -7,53 +7,43 @@ from dotenv import load_dotenv
 import shutil
 from transformers import pipeline
 
-# ✅ Load environment variables
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-# ✅ Configure Gemini API
 genai.configure(api_key=GEMINI_API_KEY)
 
-# ✅ Initialize FastAPI
 app = FastAPI()
 
-# ✅ MongoDB Connection
 client = MongoClient(MONGO_URI)
 db = client["memoryRecallDB"]
 notes_collection = db["notes"]
 
-# ✅ Request Models    
 class MemoryQuery(BaseModel):
     query: str
 
-# 🎯 1️⃣ AI-Powered Recall (Gemini)
 @app.post("/ai-recall")
 def ai_recall(memory_query: MemoryQuery):
     query = memory_query.query
 
-    # 🔍 Fetch stored memories
     memories = [note["memory"] for note in notes_collection.find({}, {"_id": 0, "memory": 1})]
 
     if not memories:
         return {"recalled_memory": "No memories found in the database."}
 
-    # 📜 Format prompt
     prompt = f"I have the following memories stored: {memories}. Based on the query '{query}', retrieve the most relevant memory."
 
-    model = genai.GenerativeModel("gemini-1.5-pro-latest")  # 🔥 Use Gemini API
+    model = genai.GenerativeModel("gemini-1.5-pro-latest")  
     response = model.generate_content(prompt)
 
     return {"recalled_memory": response.text}
 
-# 🎤 2️⃣ Convert Speech-to-Text (Whisper)
 from datetime import datetime
 
 @app.post("/transcribe-audio")
 async def transcribe_audio(file: UploadFile = File(...)):
     file_path = f"./audio_{file.filename}"
     
-    # 🔹 Save audio file
+
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
