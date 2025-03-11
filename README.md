@@ -2,7 +2,7 @@
 # 🧠 AI Memory Recall System  
 Seamlessly store and recall thoughts using AI-powered memory retrieval with NLP.
 
-🚀 **Built with:** FastAPI, MongoDB, AWS EC2, Docker, Streamlit  
+🚀 **Built with:** FastAPI, MongoDB, AWS EC2, ECR, Docker, Streamlit  
 
 ---
 
