@@ -1,8 +1,8 @@
 version = 0.1
 [default.deploy.parameters]
-stack_name = "app-ai-memory"
+stack_name = "Your-stack-name"
 resolve_s3 = true
-s3_prefix = "app-ai-memory"
+s3_prefix = "ypur-bucket-name"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
