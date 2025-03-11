@@ -6,33 +6,27 @@ from gtts import gTTS
 from dotenv import load_dotenv
 from pydub.utils import which
 
-# ✅ MUST BE FIRST Streamlit COMMAND
-st.set_page_config(
-    page_title="AI Memory Recall",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
-
 # ✅ Load environment variables
 load_dotenv()
-
-# ✅ Backend API URL
 API_URL = st.secrets.get("API_URL", os.getenv("API_URL"))
 
 if not API_URL:
     st.error("⚠️ API_URL is missing! Set it in Streamlit Secrets or .env file.")
 
-# ✅ **Fix: Download and Set FFmpeg Path**
-if not os.path.exists("ffmpeg") or not os.path.exists("ffprobe"):
-    with st.spinner("Downloading FFmpeg binaries... ⏳"):
-        os.system("wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O ffmpeg.tar.xz")
-        os.system("tar -xf ffmpeg.tar.xz --strip-components=1 --wildcards '*/ffmpeg' '*/ffprobe'")
-        os.system("chmod +x ffmpeg ffprobe")
+# ✅ Fix: Install FFmpeg if missing
+if which("ffmpeg") is None or which("ffprobe") is None:
+    with st.spinner("Installing FFmpeg... ⏳"):
+        os.system("sudo apt-get update && sudo apt-get install -y ffmpeg")
+        AudioSegment.converter = "ffmpeg"
+        AudioSegment.ffmpeg = "ffmpeg"
+        AudioSegment.ffprobe = "ffprobe"
 
-# ✅ Set FFmpeg Paths
-AudioSegment.converter = os.path.abspath("ffmpeg")
-AudioSegment.ffmpeg = os.path.abspath("ffmpeg")
-AudioSegment.ffprobe = os.path.abspath("ffprobe")
+# ✅ Set Page Config (Must be FIRST Streamlit Command)
+st.set_page_config(
+    page_title="AI Memory Recall",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
 
 # ✅ Custom Styling
 st.markdown("""
