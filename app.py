@@ -4,15 +4,21 @@ import requests
 from pydub import AudioSegment
 from gtts import gTTS
 from dotenv import load_dotenv
+from pydub.utils import which
 
 # ✅ Load environment variables
 load_dotenv()
 
-# ✅ Backend API URL (from environment or Streamlit secrets)
+# ✅ Backend API URL
 API_URL = st.secrets.get("API_URL", os.getenv("API_URL"))
 
 if not API_URL:
     st.error("⚠️ API_URL is missing! Set it in Streamlit Secrets or .env file.")
+
+# ✅ Set FFmpeg paths for Pydub
+AudioSegment.converter = which("ffmpeg")
+AudioSegment.ffmpeg = which("ffmpeg")
+AudioSegment.ffprobe = which("ffprobe")
 
 # ✅ Set Page Config for a Professional Look
 st.set_page_config(
