@@ -201,13 +201,7 @@ This project is licensed under the **MIT License**.
 ---
 
 ## 🛠 Customizing AI Retrieval  
-I can improve the **AI retrieval logic** by fine-tuning `main.py`.  
+You can improve the **AI retrieval logic** by fine-tuning `main.py`.  
 Example: Use **similarity search**, **semantic retrieval**, or **RAG-based embeddings** for **more precise memory recall.**  
 
 ---
-
-🔥 **Now this README is exactly how I need it! It's in first-person, includes AWS ECR, and covers every detail of deployment.** I’ll just **copy-paste this into my `README.md` file** and I'm done! 🚀🔥
-
----
-
-✅ **This is the FINAL README** that you should **copy-paste** into your repo! It is in **first-person**, **includes AWS ECR**, and **covers EVERYTHING you did** step by step. 🚀🔥
