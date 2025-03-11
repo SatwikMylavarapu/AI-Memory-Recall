@@ -6,6 +6,13 @@ from gtts import gTTS
 from dotenv import load_dotenv
 from pydub.utils import which
 
+# ✅ MUST BE FIRST Streamlit COMMAND
+st.set_page_config(
+    page_title="AI Memory Recall",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
 # ✅ Load environment variables
 load_dotenv()
 
@@ -16,23 +23,16 @@ if not API_URL:
     st.error("⚠️ API_URL is missing! Set it in Streamlit Secrets or .env file.")
 
 # ✅ **Fix: Download and Set FFmpeg Path**
-if not os.path.exists("ffmpeg"):
-    st.info("Downloading FFmpeg binaries... ⏳")
-    os.system("wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O ffmpeg.tar.xz")
-    os.system("tar -xf ffmpeg.tar.xz --strip-components=1 --wildcards '*/ffmpeg' '*/ffprobe'")
-    os.system("chmod +x ffmpeg ffprobe")
+if not os.path.exists("ffmpeg") or not os.path.exists("ffprobe"):
+    with st.spinner("Downloading FFmpeg binaries... ⏳"):
+        os.system("wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O ffmpeg.tar.xz")
+        os.system("tar -xf ffmpeg.tar.xz --strip-components=1 --wildcards '*/ffmpeg' '*/ffprobe'")
+        os.system("chmod +x ffmpeg ffprobe")
 
 # ✅ Set FFmpeg Paths
 AudioSegment.converter = os.path.abspath("ffmpeg")
 AudioSegment.ffmpeg = os.path.abspath("ffmpeg")
 AudioSegment.ffprobe = os.path.abspath("ffprobe")
-
-# ✅ Set Page Config for a Professional Look
-st.set_page_config(
-    page_title="AI Memory Recall",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
 
 # ✅ Custom Styling
 st.markdown("""
