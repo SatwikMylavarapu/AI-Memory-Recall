@@ -6,6 +6,13 @@ from gtts import gTTS
 from dotenv import load_dotenv
 from pydub.utils import which
 
+# ✅ Set Page Config (MUST BE FIRST STREAMLIT COMMAND)
+st.set_page_config(
+    page_title="AI Memory Recall",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
 # ✅ Load environment variables
 load_dotenv()
 API_URL = st.secrets.get("API_URL", os.getenv("API_URL"))
@@ -20,13 +27,6 @@ if which("ffmpeg") is None or which("ffprobe") is None:
         AudioSegment.converter = "ffmpeg"
         AudioSegment.ffmpeg = "ffmpeg"
         AudioSegment.ffprobe = "ffprobe"
-
-# ✅ Set Page Config (Must be FIRST Streamlit Command)
-st.set_page_config(
-    page_title="AI Memory Recall",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
 
 # ✅ Custom Styling
 st.markdown("""
