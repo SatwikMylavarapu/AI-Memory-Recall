@@ -14,6 +14,12 @@ And later asks:
 
 The AI understands context and retrieves the most relevant memories, rather than just performing a word-for-word search.
 
+## Real-Life Applications
+Personal Task Manager: Users can log important reminders and retrieve them anytime.
+Voice-Activated Notes: It can be extended to work with voice commands for hands-free memory recall.
+Smart AI Assistant: By integrating more NLP, the system could proactively remind users of tasks based on relevance.
+Automated Journaling: Users can log thoughts throughout the day and later recall key moments.
+
 ---
 
 ## 📜 Project Overview  
