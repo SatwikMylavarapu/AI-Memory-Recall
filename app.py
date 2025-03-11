@@ -15,10 +15,17 @@ API_URL = st.secrets.get("API_URL", os.getenv("API_URL"))
 if not API_URL:
     st.error("⚠️ API_URL is missing! Set it in Streamlit Secrets or .env file.")
 
-# ✅ Set FFmpeg paths for Pydub
-AudioSegment.converter = which("ffmpeg")
-AudioSegment.ffmpeg = which("ffmpeg")
-AudioSegment.ffprobe = which("ffprobe")
+# ✅ **Fix: Download and Set FFmpeg Path**
+if not os.path.exists("ffmpeg"):
+    st.info("Downloading FFmpeg binaries... ⏳")
+    os.system("wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O ffmpeg.tar.xz")
+    os.system("tar -xf ffmpeg.tar.xz --strip-components=1 --wildcards '*/ffmpeg' '*/ffprobe'")
+    os.system("chmod +x ffmpeg ffprobe")
+
+# ✅ Set FFmpeg Paths
+AudioSegment.converter = os.path.abspath("ffmpeg")
+AudioSegment.ffmpeg = os.path.abspath("ffmpeg")
+AudioSegment.ffprobe = os.path.abspath("ffprobe")
 
 # ✅ Set Page Config for a Professional Look
 st.set_page_config(
