@@ -1,14 +1,14 @@
 # 🧠 AI Memory Recall System  
 I built this system to seamlessly store and recall thoughts using AI-powered memory retrieval with NLP.
 
-🚀 **Built with:** FastAPI, MongoDB, AWS EC2, AWS ECR, Docker, Streamlit  
+**Built with:** FastAPI, MongoDB, AWS EC2, AWS ECR, Docker, Streamlit  
 
 ---
 
 ## 📜 Project Overview  
 This project enables me to **store and recall memories** using AI-powered **Natural Language Processing (NLP)**. I can store thoughts, retrieve them based on context, and even convert text to speech.
 
-### 🚀 Tech Stack  
+### Tech Stack  
 - **Backend**: FastAPI, MongoDB, Docker, AWS EC2  
 - **Frontend**: Streamlit  
 - **AI & NLP**: OpenAI Whisper, Google Gemini AI  
@@ -20,14 +20,14 @@ This project enables me to **store and recall memories** using AI-powered **Natu
 ## 1️⃣ Setting Up MongoDB (Free Tier)  
 I used **MongoDB Atlas** to store memory data.  
 
-### 🔹 Step 1: Creating a Free MongoDB Atlas Account  
+### Step 1: Creating a Free MongoDB Atlas Account  
 1. I went to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)  
 2. Clicked **Get Started** → Selected **Shared (Free Tier)**  
 3. Chose **AWS (us-east-1)** and clicked **Create Cluster**  
 4. **Network Access** → Allowed `0.0.0.0/0` (For Development)  
 5. **Created Database User** → Added a username & password  
 
-### 🔹 Step 2: Getting the Connection String  
+### Step 2: Getting the Connection String  
 1. I went to **Database > Connect**  
 2. Chose **Python** and copied the connection string  
 3. Replaced `<username>` and `<password>` with my credentials  
@@ -42,7 +42,7 @@ MONGO_URI = "mongodb+srv://<username>:<password>@cluster.mongodb.net/memoryRecal
 ## 2️⃣ Setting Up AWS EC2 (Free Tier)  
 I deployed my **FastAPI backend** on an **AWS EC2 instance (Free Tier).**  
 
-### 🔹 Step 1: Creating an EC2 Instance  
+### Step 1: Creating an EC2 Instance  
 1. I went to **AWS Console > EC2 > Launch Instance**  
 2. Chose **Ubuntu 22.04 (Free Tier Eligible)**  
 3. Selected **t2.micro (Free Tier)**  
@@ -52,7 +52,7 @@ I deployed my **FastAPI backend** on an **AWS EC2 instance (Free Tier).**
    - **HTTP (80), HTTPS (443), Custom TCP (8000) for FastAPI**  
 6. Clicked **Launch Instance**  
 
-### 🔹 Step 2: Connecting to EC2  
+###  Step 2: Connecting to EC2  
 I found my **EC2 Public IP** under **Instances > Public IPv4**  
 
 Then I connected using SSH:  
@@ -66,20 +66,20 @@ ssh -i my-key.pem ubuntu@<EC2-PUBLIC-IP>
 ## 3️⃣ Installing Dependencies on EC2  
 After SSH-ing into EC2:  
 
-### 🔹 Step 1: Updating & Installing Essentials  
+###  Step 1: Updating & Installing Essentials  
 ```sh
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3 python3-pip -y
 sudo apt install docker.io -y
 ```
 
-### 🔹 Step 2: Cloning My GitHub Repository  
+### Step 2: Cloning My GitHub Repository  
 ```sh
 git clone https://github.com/<my-username>/AI-Memory-Recall.git
 cd AI-Memory-Recall
 ```
 
-### 🔹 Step 3: Installing Python Dependencies  
+### Step 3: Installing Python Dependencies  
 ```sh
 pip install -r requirements.txt
 ```
@@ -87,16 +87,16 @@ pip install -r requirements.txt
 ---
 
 ## 4️⃣ Running FastAPI Backend on EC2  
-### 🔹 Step 1: Starting the FastAPI Server  
+### Step 1: Starting the FastAPI Server  
 ```sh
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
-🚀 **FastAPI is running at:**  
+**FastAPI is running at:**  
 ```
 http://<EC2-PUBLIC-IP>:8000/docs
 ```
 
-### 🔹 Step 2: Testing API Endpoints  
+### Step 2: Testing API Endpoints  
 I visited:  
 ```
 http://<EC2-PUBLIC-IP>:8000/docs
@@ -108,28 +108,28 @@ Then tested `POST /store-memory` and `POST /ai-recall`.
 ## 5️⃣ Deploying FastAPI Using Docker & AWS ECR  
 I containerized my FastAPI app and pushed it to **AWS ECR**.
 
-### 🔹 Step 1: Creating an AWS ECR Repository  
+### Step 1: Creating an AWS ECR Repository  
 ```sh
 aws ecr create-repository --repository-name ai-memory-recall
 ```
 
-### 🔹 Step 2: Authenticating Docker to AWS ECR  
+### Step 2: Authenticating Docker to AWS ECR  
 ```sh
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
 ```
 
-### 🔹 Step 3: Building & Tagging the Docker Image  
+### Step 3: Building & Tagging the Docker Image  
 ```sh
 docker build -t ai-memory .
 docker tag ai-memory:latest <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/ai-memory-recall:latest
 ```
 
-### 🔹 Step 4: Pushing to AWS ECR  
+### Step 4: Pushing to AWS ECR  
 ```sh
 docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/ai-memory-recall:latest
 ```
 
-### 🔹 Step 5: Running the Container on EC2  
+### Step 5: Running the Container on EC2  
 ```sh
 docker run -d -p 8000:8000 <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/ai-memory-recall:latest
 ```
@@ -139,19 +139,19 @@ docker run -d -p 8000:8000 <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/ai-m
 ## 6️⃣ Setting Up Streamlit Frontend  
 I deployed the **Streamlit UI** to interact with the FastAPI backend.
 
-### 🔹 Step 1: Cloning Repo & Installing Streamlit  
+### Step 1: Cloning Repo & Installing Streamlit  
 ```sh
 git clone https://github.com/<my-username>/AI-Memory-Recall.git
 cd AI-Memory-Recall
 pip install streamlit requests python-dotenv
 ```
 
-### 🔹 Step 2: Running the Streamlit App Locally  
+### Step 2: Running the Streamlit App Locally  
 ```sh
 streamlit run app.py
 ```
 
-### 🔹 Step 3: Deploying to Streamlit Cloud  
+### Step 3: Deploying to Streamlit Cloud  
 1. I went to **[Streamlit Cloud](https://streamlit.io/cloud)**  
 2. Clicked **Deploy an App**  
 3. Selected my GitHub repository  
@@ -165,7 +165,7 @@ API_URL = "http://<EC2-PUBLIC-IP>:8000"
 ---
 
 ## 7️⃣ Troubleshooting  
-### 🔹 Common Issues & Fixes  
+### Common Issues & Fixes  
 
 | Issue | Fix |
 |--------|------|
@@ -177,8 +177,8 @@ API_URL = "http://<EC2-PUBLIC-IP>:8000"
 
 ---
 
-## 🔥 Conclusion  
-🚀 **I successfully deployed an AI-powered memory recall system!**  
+## Conclusion  
+**I successfully deployed an AI-powered memory recall system!**  
 ✔ Stored thoughts  
 ✔ Retrieved memories using AI  
 ✔ Speech-to-text & text-to-speech  
