@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AI Memory Recall Deployment
+
+Resources:
+  AIMemoryLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: AIMemoryRecall
+      Handler: main.lambda_handler
+      Runtime: python3.9
+      Code:
+        S3Bucket: your-s3-bucket
+        S3Key: your-deployment-package.zip
+      MemorySize: 512
+      Timeout: 30
+      Role: arn:aws:iam::your-account-id:role/your-lambda-role
+      Environment:
+        Variables:
+          MONGO_URI: "your_mongo_uri_here"
+          GEMINI_API_KEY: "your_gemini_api_key_here"
+
+  AIMemoryAPIGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: AIMemoryAPI
+      Description: API Gateway for AI Memory Recall System
+
+  AIMemoryDeployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref AIMemoryAPIGateway
+      StageName: prod
+
+Outputs:
+  APIEndpoint:
+    Description: "Invoke URL for AI Memory Recall API"
+    Value: !Sub "https://${AIMemoryAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/prod"
