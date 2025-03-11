@@ -1,31 +1,33 @@
-import os
 import streamlit as st
 import requests
-from pydub import AudioSegment
-from gtts import gTTS
+import os
+import io
 from dotenv import load_dotenv
+from gtts import gTTS
 
-# ✅ Load Environment Variables
+# ✅ Load environment variables
 load_dotenv()
-# ✅ Backend API URL
 API_URL = os.getenv("API_URL")
 
+# ✅ Check if API_URL is set
+if not API_URL:
+    st.error("⚠️ API_URL is missing! Set it in `.env` or Streamlit Secrets.")
+    st.stop()
 
-# ✅ Set Page Config for a Professional Look
+# ✅ Set Page Config
 st.set_page_config(
     page_title="AI Memory Recall",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
-# ✅ Custom Styling for a Clean UI
+# ✅ Custom Styling
 st.markdown("""
     <style>
         body { background-color: #0d1117; color: white; font-family: 'Arial', sans-serif; }
         .stTextInput input, .stTextArea textarea { background-color: #161b22; color: white; }
         .stButton button { background-color: #1f6feb; color: white; font-size: 16px; padding: 10px; width: 100%; }
         .stMarkdown h1 { font-size: 30px; font-weight: bold; text-align: center; }
-        .stMarkdown h2 { font-size: 24px; font-weight: bold; }
         .stMarkdown p { font-size: 16px; color: #b0b3b8; text-align: center; }
         .memory-box { padding: 15px; background-color: #1e2a38; border-radius: 10px; color: white; margin-bottom: 15px; }
     </style>
@@ -45,7 +47,7 @@ if st.button("Store Memory"):
         if response.status_code == 200:
             st.success("✅ Memory stored successfully!")
         else:
-            st.error(f"⚠️ Error storing memory: {response.json()}")  
+            st.error(f"⚠️ Error storing memory: {response.json()}")
     else:
         st.warning("❗ Please enter something to store.")
 
@@ -64,20 +66,15 @@ if st.button("Recall Memory"):
                 formatted_response = recalled_memories.replace("\n", "\n\n")
                 st.markdown(f"<div class='memory-box'>🧠 AI Response:<br><br>{formatted_response}</div>", unsafe_allow_html=True)
 
-                # ✅ **Generate Voice Output**
+                # ✅ **Generate Voice Output (In-Memory)**
                 tts = gTTS(text=recalled_memories, lang="en")
-                tts.save("response.mp3")
+                audio_buffer = io.BytesIO()
+                tts.write_to_fp(audio_buffer)
+                audio_buffer.seek(0)
 
-                # Convert to WAV (For Better Playback)
-                audio = AudioSegment.from_mp3("response.mp3")
-                audio.export("response.wav", format="wav")
-
-                # ✅ **Display & Play Audio**
+                # ✅ **Play the Audio**
                 st.subheader("🔊 Voice Output")
-                audio_file = open("response.wav", "rb")
-                audio_bytes = audio_file.read()
-                st.audio(audio_bytes, format="audio/wav")
-                
+                st.audio(audio_buffer, format="audio/mp3")
             else:
                 st.warning("⚠️ No memory found.")
         else:
