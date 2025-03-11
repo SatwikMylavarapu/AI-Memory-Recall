@@ -184,7 +184,6 @@ API_URL = "http://<EC2-PUBLIC-IP>:8000"
 ✔ Speech-to-text & text-to-speech  
 ✔ Fully deployed on **AWS EC2, AWS ECR, Docker & Streamlit**  
 
-🙌 **If this helped, I’ll star my own repo on GitHub!**  
 
 ---
 
