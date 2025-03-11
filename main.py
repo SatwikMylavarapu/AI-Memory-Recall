@@ -14,7 +14,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 app = FastAPI()
 
-client = MongoClient(MONGO)
+client = MongoClient(MONGO_URI)
 db = client["memoryRecallDB"]
 notes_collection = db["notes"]
 
