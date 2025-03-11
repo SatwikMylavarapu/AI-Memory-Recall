@@ -1,5 +1,15 @@
-pydub
-requests
-streamlit
+boto3==1.37.9
+fastapi==0.115.11
+google-generativeai==0.8.4
+pymongo==4.11.2
+transformers==4.49.0
+torch==2.3.0  # Match torchvision version
+torchaudio==2.3.0
+torchvision==0.18.0
+openai-whisper==20231117
+ffmpeg-python  # Python wrapper for ffmpeg
+uvicorn==0.29.0
+python-multipart==0.0.20
+pyttsx3==2.90
+mangum==0.17.0
 python-dotenv
-gtts
